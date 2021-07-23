@@ -1,8 +1,13 @@
 plugins {
     `java-gradle-plugin`
+    id("maven-publish")
+    id("com.gradle.plugin-publish") version "0.14.0"
 
     id("org.jetbrains.kotlin.jvm") version "1.4.31"
 }
+
+group = "com.github.abendt"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
@@ -24,6 +29,21 @@ gradlePlugin {
     val greeting by plugins.creating {
         id = "com.github.abendt.findclass"
         implementationClass = "com.github.abendt.findclass.GradleFindclassPlugin"
+    }
+}
+
+pluginBundle {
+    website = "https://github.com/abendt/gradle-findclass-plugin"
+    vcsUrl = "https://github.com/abendt/gradle-findclass-plugin.git"
+    tags = listOf("gradle", "findclass", "dependencies")
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "localPluginRepository"
+            url = uri("../build/local-plugin-repository")
+        }
     }
 }
 
