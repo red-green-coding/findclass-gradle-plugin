@@ -19,12 +19,12 @@ The plugin adds the task `findClass` that can tell you from which JAR a given Ja
 > Task :findClass
 find class 'org.apache.commons.lang3.StringUtils'
 +--- compileClasspath
-|    `--- file:/Users/pho/Projects/gradle-findclass/plugin/build/tmp/functionalTest/work/.gradle-test-kit/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
+|    `--- file:/Users/abendt/.caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
 +--- runtimeClasspath
-|    `--- file:/Users/pho/Projects/gradle-findclass/plugin/build/tmp/functionalTest/work/.gradle-test-kit/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
+|    `--- file:/Users/abendt/.caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
 +--- testCompileClasspath
-|    `--- file:/Users/pho/Projects/gradle-findclass/plugin/build/tmp/functionalTest/work/.gradle-test-kit/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
+|    `--- file:/Users/abendt/.caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
 `--- testRuntimeClasspath
-     `--- file:/Users/pho/Projects/gradle-findclass/plugin/build/tmp/functionalTest/work/.gradle-test-kit/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
+     `--- file:/Users/abendt/.caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
 
 ```
