@@ -34,6 +34,8 @@ dependencies {
 gradlePlugin {
     val findClass by plugins.creating {
         id = "io.github.redgreencoding.findclass"
+        displayName = "FindClass Gradle Plugin"
+        description = "A plugin that helps you find out from which .jar archive a class is loaded from"
         implementationClass = "io.github.redgreencoding.findclass.FindClassGradlePlugin"
     }
 }
@@ -66,4 +68,18 @@ val functionalTest by tasks.registering(Test::class) {
 
 tasks.check {
     dependsOn(functionalTest)
+}
+
+tasks {
+    validatePlugins {
+        enableStricterValidation.set(true)
+        failOnWarning.set(true)
+    }
+    jar {
+        from(sourceSets.main.map { it.allSource })
+        manifest.attributes.apply {
+            put("Implementation-Title", "Gradle Kotlin DSL (${project.name})")
+            put("Implementation-Version", archiveVersion.get())
+        }
+    }
 }
