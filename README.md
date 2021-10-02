@@ -7,7 +7,7 @@ Add the plugin to your Java/Kotlin project:
 ```
 plugins {
     id 'java'
-    id('com.github.abendt.findclass')
+    id('io.github.redgreencoding.findclass')
 }
 ```
 
