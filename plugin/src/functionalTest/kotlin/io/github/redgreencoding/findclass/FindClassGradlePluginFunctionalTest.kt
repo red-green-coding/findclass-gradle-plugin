@@ -1,6 +1,7 @@
 package io.github.redgreencoding.findclass
 
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.internal.PluginUnderTestMetadataReading
 import org.junit.Before
 import java.io.File
 import kotlin.test.Test
@@ -42,6 +43,61 @@ class FindClassGradlePluginFunctionalTest {
         runner.forwardOutput()
         runner.withPluginClasspath()
         runner.withArguments(
+            "findClass",
+            "-Pfc.findClass=org.apache.commons.lang3.StringUtils",
+            "--warning-mode",
+            "all"
+        )
+        runner.withProjectDir(projectDir)
+        val result = runner.build()
+
+        // Verify the result
+        assertTrue(result.output.contains("commons-lang3-3.11.jar"))
+    }
+
+    @Test
+    fun `can use as init script`() {
+        val gradleHomeDir = File("build/gradleHome")
+        gradleHomeDir.mkdirs()
+
+        val initDir = File(gradleHomeDir, "init.d")
+        initDir.mkdirs()
+
+        initDir.resolve("findClass.gradle").writeText(
+            """initscript {
+                    dependencies {
+                        classpath files(${PluginUnderTestMetadataReading.readImplementationClasspath().joinToString(separator = ",") { "'$it'" }})
+                    }
+                }
+                rootProject {
+                    apply plugin: io.github.redgreencoding.findclass.FindClassGradlePlugin
+                }
+            """.trimIndent()
+        )
+
+        // Setup the test build
+        projectDir.resolve("build.gradle").writeText(
+            """
+            plugins {
+                id 'java'
+            }
+            
+            repositories {
+                mavenCentral()
+            }
+            
+            dependencies {
+                implementation 'org.apache.commons:commons-lang3:3.11'
+            }
+        """
+        )
+
+        // Run the build
+        val runner = GradleRunner.create()
+        runner.forwardOutput()
+        runner.withPluginClasspath()
+        runner.withArguments(
+            "-Dgradle.user.home=${gradleHomeDir.absolutePath}",
             "findClass",
             "-Pfc.findClass=org.apache.commons.lang3.StringUtils",
             "--warning-mode",
