@@ -1,13 +1,19 @@
 plugins {
     `java-gradle-plugin`
     id("maven-publish")
-    id("com.gradle.plugin-publish") version "0.14.0"
+    id("com.gradle.plugin-publish") version "0.16.0"
 
-    id("org.jetbrains.kotlin.jvm") version "1.4.31"
+    id("org.jetbrains.kotlin.jvm") version "1.5.31"
 }
 
-group = "com.github.abendt"
-version = "0.1.0"
+group = "io.github.redgreencoding"
+version = "0.0.1"
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
 
 repositories {
     mavenCentral()
@@ -26,16 +32,16 @@ dependencies {
 }
 
 gradlePlugin {
-    val greeting by plugins.creating {
-        id = "com.github.abendt.findclass"
-        implementationClass = "com.github.abendt.findclass.GradleFindclassPlugin"
+    val findClass by plugins.creating {
+        id = "io.github.redgreencoding.findclass"
+        implementationClass = "io.github.redgreencoding.findclass.FindClassGradlePlugin"
     }
 }
 
 pluginBundle {
-    website = "https://github.com/abendt/gradle-findclass-plugin"
-    vcsUrl = "https://github.com/abendt/gradle-findclass-plugin.git"
-    tags = listOf("gradle", "findclass", "dependencies")
+    website = "https://github.com/red-green-coding/findclass-gradle-plugin"
+    vcsUrl = "https://github.com/red-green-coding/findclass-gradle-plugin.git"
+    tags = listOf("findclass", "searchclass", "dependencies", "analyze")
 }
 
 publishing {
