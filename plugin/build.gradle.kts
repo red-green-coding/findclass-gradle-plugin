@@ -47,6 +47,12 @@ pluginBundle {
 }
 
 publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = "findclass-gradle-plugin"
+        }
+    }
+
     repositories {
         maven {
             name = "localPluginRepository"
