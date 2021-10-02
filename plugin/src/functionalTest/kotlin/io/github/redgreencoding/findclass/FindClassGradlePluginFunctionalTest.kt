@@ -1,5 +1,6 @@
 package io.github.redgreencoding.findclass
 
+import org.gradle.internal.impldep.org.junit.Assert
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.internal.PluginUnderTestMetadataReading
 import org.junit.Before
@@ -19,7 +20,7 @@ class FindClassGradlePluginFunctionalTest {
     }
 
     @Test
-    fun `can run findClass task`() {
+    fun `can run resolveClass task`() {
         // Setup the test build
         projectDir.resolve("build.gradle").writeText(
             """
@@ -43,8 +44,8 @@ class FindClassGradlePluginFunctionalTest {
         runner.forwardOutput()
         runner.withPluginClasspath()
         runner.withArguments(
-            "findClass",
-            "-Pfc.findClass=org.apache.commons.lang3.StringUtils",
+            "resolveClass",
+            "--classname=org.apache.commons.lang3.StringUtils",
             "--warning-mode",
             "all"
         )
@@ -53,6 +54,72 @@ class FindClassGradlePluginFunctionalTest {
 
         // Verify the result
         assertTrue(result.output.contains("commons-lang3-3.11.jar"))
+    }
+
+    @Test
+    fun `resolveClass should fail without option`() {
+        // Setup the test build
+        projectDir.resolve("build.gradle").writeText(
+            """
+            plugins {
+                id 'java'
+                id('io.github.redgreencoding.findclass')
+            }
+            
+            repositories {
+                mavenCentral()
+            }
+            
+            dependencies {
+                implementation 'org.apache.commons:commons-lang3:3.11'
+            }
+        """
+        )
+
+        // Run the build
+        val runner = GradleRunner.create()
+        runner.forwardOutput()
+        runner.withPluginClasspath()
+        runner.withArguments(
+            "resolveClass",
+            "--warning-mode",
+            "all"
+        )
+        runner.withProjectDir(projectDir)
+
+        runner.buildAndFail()
+    }
+
+    @Test
+    fun `resolveClass can print help`() {
+        // Setup the test build
+        projectDir.resolve("build.gradle").writeText(
+            """
+            plugins {
+                id 'java'
+                id('io.github.redgreencoding.findclass')
+            }
+            
+            repositories {
+                mavenCentral()
+            }
+        """
+        )
+
+        // Run the build
+        val runner = GradleRunner.create()
+        runner.forwardOutput()
+        runner.withPluginClasspath()
+        runner.withArguments(
+            "help",
+            "--task",
+            "resolveClass",
+            "--warning-mode",
+            "all"
+        )
+        runner.withProjectDir(projectDir)
+
+        runner.build()
     }
 
     @Test
@@ -66,7 +133,9 @@ class FindClassGradlePluginFunctionalTest {
         initDir.resolve("findClass.gradle").writeText(
             """initscript {
                     dependencies {
-                        classpath files(${PluginUnderTestMetadataReading.readImplementationClasspath().joinToString(separator = ",") { "'$it'" }})
+                        classpath files(${
+            PluginUnderTestMetadataReading.readImplementationClasspath().joinToString(separator = ",") { "'$it'" }
+            })
                     }
                 }
                 rootProject {
@@ -95,11 +164,10 @@ class FindClassGradlePluginFunctionalTest {
         // Run the build
         val runner = GradleRunner.create()
         runner.forwardOutput()
-        runner.withPluginClasspath()
         runner.withArguments(
             "-Dgradle.user.home=${gradleHomeDir.absolutePath}",
-            "findClass",
-            "-Pfc.findClass=org.apache.commons.lang3.StringUtils",
+            "resolveClass",
+            "--classname=org.apache.commons.lang3.StringUtils",
             "--warning-mode",
             "all"
         )
@@ -111,7 +179,7 @@ class FindClassGradlePluginFunctionalTest {
     }
 
     @Test
-    fun `findClass can filter out configurations`() {
+    fun `resolveClass can filter out configurations`() {
         projectDir.resolve("build.gradle").writeText(
             """
             plugins {
@@ -134,9 +202,9 @@ class FindClassGradlePluginFunctionalTest {
         runner.forwardOutput()
         runner.withPluginClasspath()
         runner.withArguments(
-            "findClass",
-            "-Pfc.findClass=org.apache.commons.lang3.StringUtils",
-            "-Pfc.configurations=runtimeClasspath",
+            "resolveClass",
+            "--classname=org.apache.commons.lang3.StringUtils",
+            "--configurations=runtimeClasspath",
             "--warning-mode",
             "all"
         )
@@ -150,7 +218,7 @@ class FindClassGradlePluginFunctionalTest {
     }
 
     @Test
-    fun `can run searchClass task`() {
+    fun `can run scanConfigurations task`() {
         projectDir.resolve("build.gradle").writeText(
             """
             plugins {
@@ -173,8 +241,8 @@ class FindClassGradlePluginFunctionalTest {
         runner.forwardOutput()
         runner.withPluginClasspath()
         runner.withArguments(
-            "searchClass",
-            "-Pfc.searchClass=**/StringUtils.*",
+            "scanConfigurations",
+            "--pattern=**/StringUtils.*",
             "--warning-mode",
             "all"
         )
@@ -186,7 +254,7 @@ class FindClassGradlePluginFunctionalTest {
     }
 
     @Test
-    fun `searchClass searches the whole classpath`() {
+    fun `scanConfigurations searches the whole classpath`() {
         projectDir.resolve("build.gradle").writeText(
             """
             plugins {
@@ -210,8 +278,8 @@ class FindClassGradlePluginFunctionalTest {
         runner.forwardOutput()
         runner.withPluginClasspath()
         runner.withArguments(
-            "searchClass",
-            "-Pfc.searchClass=javax/xml/bind/JAXBException.*",
+            "scanConfigurations",
+            "--pattern=javax/xml/bind/JAXBException.*",
             "-Pfc.configurations=runtimeClasspath",
             "--warning-mode",
             "all"
@@ -225,7 +293,7 @@ class FindClassGradlePluginFunctionalTest {
     }
 
     @Test
-    fun `searchClass can filter out configurations`() {
+    fun `scanConfigurations can filter out configurations`() {
         projectDir.resolve("build.gradle").writeText(
             """
             plugins {
@@ -248,9 +316,9 @@ class FindClassGradlePluginFunctionalTest {
         runner.forwardOutput()
         runner.withPluginClasspath()
         runner.withArguments(
-            "searchClass",
-            "-Pfc.searchClass=**/StringUtils.*",
-            "-Pfc.configurations=runtimeClasspath",
+            "scanConfigurations",
+            "--pattern=**/StringUtils.*",
+            "--configurations=runtimeClasspath",
             "--warning-mode",
             "all"
         )
