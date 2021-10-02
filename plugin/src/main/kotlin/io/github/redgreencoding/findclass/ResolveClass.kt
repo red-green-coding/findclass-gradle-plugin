@@ -10,8 +10,10 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
+import org.gradle.work.DisableCachingByDefault
 import java.net.URLClassLoader
 
+@DisableCachingByDefault(because = "Task does not generate any output")
 open class ResolveClass : DefaultTask() {
 
     init {

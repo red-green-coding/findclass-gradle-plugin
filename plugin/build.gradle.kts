@@ -43,7 +43,7 @@ gradlePlugin {
 pluginBundle {
     website = "https://github.com/red-green-coding/findclass-gradle-plugin"
     vcsUrl = "https://github.com/red-green-coding/findclass-gradle-plugin.git"
-    tags = listOf("findclass", "searchclass", "dependencies", "analyze")
+    tags = listOf("findclass", "searchclass", "dependencies", "analyze", "classpath")
 }
 
 publishing {
