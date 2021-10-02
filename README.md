@@ -17,12 +17,15 @@ plugins {
 
 ### per user (init script)
 
-TODO
-
 ```groovy
 initscript {
+    repositories {
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
+    }
     dependencies {
-        classpath ...
+        classpath("io.github.redgreencoding:findclass-gradle-plugin:0.0.1")
     }
 }
 
