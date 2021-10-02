@@ -48,7 +48,7 @@ pluginBundle {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("pluginMaven") {
             artifactId = "findclass-gradle-plugin"
         }
     }
