@@ -26,9 +26,8 @@ dependencies {
 
     implementation("org.barfuin.texttree:text-tree:2.1.1")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
+    testImplementation("io.kotest:kotest-assertions-core:4.6.3")
 }
 
 gradlePlugin {
@@ -74,6 +73,10 @@ val functionalTest by tasks.registering(Test::class) {
 
 tasks.check {
     dependsOn(functionalTest)
+}
+
+tasks.withType(Test::class.java) {
+    useJUnitPlatform()
 }
 
 tasks {

@@ -4,16 +4,18 @@ import org.barfuin.texttree.api.DefaultNode
 import org.barfuin.texttree.api.Node
 import org.barfuin.texttree.internal.TextTreeImpl
 import org.gradle.api.DefaultTask
-import org.gradle.api.Project
 import org.gradle.api.artifacts.ConfigurationContainer
+import org.gradle.api.file.ArchiveOperations
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.gradle.work.DisableCachingByDefault
+import javax.inject.Inject
 
 @DisableCachingByDefault(because = "Task does not generate any output")
-open class ScanConfigurations : DefaultTask() {
+open class ScanConfigurations @Inject constructor(private val archiveOperations: ArchiveOperations) :
+    DefaultTask() {
 
     init {
         description = "Scans the configurations for a class pattern"
@@ -43,7 +45,6 @@ open class ScanConfigurations : DefaultTask() {
 
             val node =
                 searchClassPatternInConfigurations(
-                    project,
                     it,
                     project.configurations,
                     configurations?.toSet() ?: emptySet()
@@ -54,7 +55,6 @@ open class ScanConfigurations : DefaultTask() {
     }
 
     private fun searchClassPatternInConfigurations(
-        project: Project,
         pattern: String,
         configurations: ConfigurationContainer,
         filterConfigurations: Set<String>
@@ -70,7 +70,7 @@ open class ScanConfigurations : DefaultTask() {
                 if (configuration.isCanBeResolved) {
                     configuration.resolve().filter { it.name.endsWith(".jar") }
                         .forEach { file ->
-                            val found = !project.zipTree(file).matching {
+                            val found = !archiveOperations.zipTree(file).matching {
                                 it.include(pattern)
                             }.isEmpty
 
