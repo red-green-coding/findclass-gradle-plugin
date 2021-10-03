@@ -150,7 +150,7 @@ class FindClassGradlePluginFunctionalSpec : StringSpec() {
             )
 
             gradleShouldSucceed {
-                output.shouldContain("commons-lang3-3.11.jar")
+                output shouldContain "commons-lang3-3.11.jar"
             }
         }
 
@@ -179,9 +179,9 @@ class FindClassGradlePluginFunctionalSpec : StringSpec() {
             )
 
             gradleShouldSucceed {
-                output.shouldContain("commons-lang3-3.11.jar")
-                output.shouldNotContain("testCompileClasspath")
-                output.shouldNotContain("testRuntimeClasspath")
+                output shouldContain "commons-lang3-3.11.jar"
+                output  shouldNotContain "testCompileClasspath"
+                output  shouldNotContain "testRuntimeClasspath"
             }
         }
 
@@ -209,7 +209,7 @@ class FindClassGradlePluginFunctionalSpec : StringSpec() {
             )
 
             gradleShouldSucceed {
-                output.shouldContain("commons-lang3-3.11.jar")
+                output shouldContain "commons-lang3-3.11.jar"
             }
         }
 
@@ -238,8 +238,8 @@ class FindClassGradlePluginFunctionalSpec : StringSpec() {
             )
 
             gradleShouldSucceed {
-                output.shouldContain("jaxb-api")
-                output.shouldContain("jakarta.xml.bind-api")
+                output shouldContain "jaxb-api"
+                output shouldContain "jakarta.xml.bind-api"
             }
         }
 
@@ -268,9 +268,9 @@ class FindClassGradlePluginFunctionalSpec : StringSpec() {
             )
 
             gradleShouldSucceed {
-                output.shouldContain("commons-lang3-3.11.jar")
-                output.shouldNotContain("testCompileClasspath")
-                output.shouldNotContain("testRuntimeClasspath")
+                output shouldContain "commons-lang3-3.11.jar"
+                output  shouldNotContain "testCompileClasspath"
+                output  shouldNotContain "testRuntimeClasspath"
             }
         }
     }
