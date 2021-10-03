@@ -1,6 +1,5 @@
 package io.github.redgreencoding.findclass
 
-import org.gradle.internal.impldep.org.junit.Assert
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.internal.PluginUnderTestMetadataReading
 import org.junit.Before
@@ -17,6 +16,10 @@ class FindClassGradlePluginFunctionalTest {
     fun setUp() {
         projectDir.mkdirs()
         projectDir.resolve("settings.gradle").writeText("")
+        // config cache is not supported. Also see https://github.com/ben-manes/gradle-versions-plugin/issues/410 which is
+        // a plugin with similiar requirements
+
+        // projectDir.resolve("gradle.properties").writeText("org.gradle.unsafe.configuration-cache=true")
     }
 
     @Test
