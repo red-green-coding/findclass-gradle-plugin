@@ -61,7 +61,7 @@ open class ScanConfigurations : DefaultTask() {
     ): Node {
         val deprecatedConfigurations = setOf("default", "archives")
 
-        val tree = DefaultNode("scan classpath for pattern '$pattern'")
+        val tree = DefaultNode("scan configurations for pattern '$pattern':")
 
         configurations
             .filter { !deprecatedConfigurations.contains(it.name) }

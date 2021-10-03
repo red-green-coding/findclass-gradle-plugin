@@ -54,7 +54,7 @@ open class ResolveClass : DefaultTask() {
         configurations: ConfigurationContainer,
         filterConfigurations: Set<String>
     ): Node {
-        val tree = DefaultNode("resolve class '$findClass'")
+        val tree = DefaultNode("resolve class '$findClass':")
 
         val deprecatedConfigurations = setOf("default", "archives")
 

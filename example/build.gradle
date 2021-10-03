@@ -1,0 +1,23 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath 'io.github.redgreencoding:findclass-gradle-plugin:0.0.1'
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: io.github.redgreencoding.findclass.FindClassGradlePlugin
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.11'
+}
