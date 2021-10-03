@@ -39,7 +39,7 @@ rootProject {
 
 ### resolveClass
 
-The plugin adds the task `resolveClass` that can tell you from which JAR a given Java class was loaded from. Use the option `--classname=<fqn>` to specify the full qualified classname. The plugin will try to load
+The plugin adds the task `resolveClass` that can tell you from which JAR a given Java class was loaded from. Use the option `--classname=<full_qualified_classname>` to specify the classname. The plugin will try to load
 the class using a Classloader, thus it will resolve the effective Class.
 
 `gradle resolveClass --classname=org.apache.commons.lang3.StringUtils`
@@ -82,5 +82,5 @@ scan configurations for pattern '**/StringUtils.*':
      `--- /Users/pho/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.11/68e9a6adf7cf8eb7e9d31bbc554c7c75eeaac568/commons-lang3-3.11.jar
 ```
 
-By default `scanConfigurations` will search all Gradle configurations. You can use the option `--configurations=<list>` to further limit the configurations that should be searched. Example usage:
+By default `scanConfigurations` will search all Gradle configurations. You can use the option `--configurations=<config1,config2,...>` to further limit the configurations that should be searched. Example usage:
 `--configurations=compileClasspath,runtimeClasspath`.
