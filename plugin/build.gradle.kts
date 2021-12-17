@@ -3,7 +3,8 @@ plugins {
     id("maven-publish")
     id("com.gradle.plugin-publish") version "0.18.0"
 
-    id("org.jetbrains.kotlin.jvm") version "1.6.10"
+    // this should be set to 1.5.31 as this is the bundled version of gradle 7.3
+    id("org.jetbrains.kotlin.jvm") version "1.5.31"
 }
 
 group = "io.github.redgreencoding"
@@ -26,8 +27,9 @@ dependencies {
 
     implementation("org.barfuin.texttree:text-tree:2.1.1")
 
-    testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
-    testImplementation("io.kotest:kotest-assertions-core:4.6.3")
+    val koTestVersion = "4.6.3"
+    testImplementation("io.kotest:kotest-runner-junit5:$koTestVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$koTestVersion")
 }
 
 gradlePlugin {
@@ -77,6 +79,21 @@ tasks.check {
 
 tasks.withType(Test::class.java) {
     useJUnitPlatform()
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        allWarningsAsErrors = true
+
+        jvmTarget = "1.8"
+        apiVersion = "1.5"
+        languageVersion = "1.5"
+
+        incremental = true
+        freeCompilerArgs = listOf(
+            "-Xjsr305=strict"
+        )
+    }
 }
 
 tasks {
