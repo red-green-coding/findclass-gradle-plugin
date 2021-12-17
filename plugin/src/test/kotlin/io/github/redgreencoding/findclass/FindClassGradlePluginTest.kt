@@ -9,8 +9,4 @@ class FindClassGradlePluginTest : StringSpec({
         val project = ProjectBuilder.builder().build()
         project.plugins.apply("io.github.redgreencoding.findclass")
     }
-
-    "foo" {
-        println(Class.forName("kotlin.time.DurationKt").protectionDomain.codeSource.location)
-    }
 })
