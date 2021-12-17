@@ -21,9 +21,7 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation(gradleApi())
 
     implementation("org.barfuin.texttree:text-tree:2.1.1")
 
