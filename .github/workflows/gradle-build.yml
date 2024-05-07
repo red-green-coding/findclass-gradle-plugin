@@ -26,7 +26,7 @@ jobs:
         if: success() || failure()    # run this step even if previous step failed
         with:
           name: Test reports
-          path: build/test-results/**/TEST-*.xml
+          path: "**/build/test-results/**/TEST-*.xml"
           reporter: java-junit
 
   # requires 'Allow GitHub Actions to create and approve pull requests' to be enabled in Code and automation/Actions/General
