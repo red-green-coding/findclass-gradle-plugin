@@ -19,6 +19,8 @@ open class ResolveClass : DefaultTask() {
     init {
         description = "Resolves a given classname to find out which .jar is providing it"
         group = "help"
+
+        notCompatibleWithConfigurationCache("not compatible with configuration cache")
     }
 
     @Input
