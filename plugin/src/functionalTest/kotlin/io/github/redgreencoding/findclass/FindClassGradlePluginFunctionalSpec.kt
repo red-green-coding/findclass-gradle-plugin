@@ -16,7 +16,7 @@ class FindClassGradlePluginFunctionalSpec : StringSpec() {
 
     private val gradleArgs = mutableListOf<String>()
 
-    override fun beforeSpec(spec: Spec) {
+    override suspend fun beforeSpec(spec: Spec) {
         if (projectDir.exists()) {
             projectDir.deleteRecursively()
         }
@@ -26,7 +26,7 @@ class FindClassGradlePluginFunctionalSpec : StringSpec() {
         projectDir.resolve("gradle.properties").writeText("org.gradle.unsafe.configuration-cache-problems=warn")
     }
 
-    override fun beforeTest(testCase: TestCase) {
+    override suspend fun beforeTest(testCase: TestCase) {
         gradleArgs.clear()
     }
 
