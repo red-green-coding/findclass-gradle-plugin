@@ -15,7 +15,6 @@ import java.net.URLClassLoader
 
 @DisableCachingByDefault(because = "Task does not generate any output")
 open class ResolveClass : DefaultTask() {
-
     init {
         description = "Resolves a given classname to find out which .jar is providing it"
         group = "help"
@@ -26,14 +25,14 @@ open class ResolveClass : DefaultTask() {
     @Input
     @Option(
         option = "classname",
-        description = "full qualified classname. Example: org.apache.commons.lang3.StringUtils"
+        description = "full qualified classname. Example: org.apache.commons.lang3.StringUtils",
     )
     var classname: String? = null
 
     @Input
     @Option(
         option = "configurations",
-        description = "Configurations that should be searched. Defaults to all. Example: runtimeClasspath,testRuntimeClasspath"
+        description = "Configurations that should be searched. Defaults to all. Example: runtimeClasspath,testRuntimeClasspath",
     )
     @Optional
     var configurations: List<String>? = null
@@ -54,7 +53,7 @@ open class ResolveClass : DefaultTask() {
     private fun findClassInConfigurations(
         findClass: String,
         configurations: ConfigurationContainer,
-        filterConfigurations: Set<String>
+        filterConfigurations: Set<String>,
     ): Node {
         val tree = DefaultNode("resolve class '$findClass':")
 
@@ -85,6 +84,6 @@ open class ResolveClass : DefaultTask() {
         URLClassLoader(
             config.resolve().map {
                 it.toURI().toURL()
-            }.toTypedArray()
+            }.toTypedArray(),
         )
 }

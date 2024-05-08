@@ -5,6 +5,8 @@ plugins {
 
     // this should be set to 1.5.31 as this is the bundled version of gradle 7.3
     id("org.jetbrains.kotlin.jvm") version "1.9.23"
+
+    id("com.diffplug.spotless") version "6.25.0"
 }
 
 group = "io.github.redgreencoding"
@@ -66,8 +68,9 @@ publishing {
     }
 }
 
-val functionalTestSourceSet = sourceSets.create("functionalTest") {
-}
+val functionalTestSourceSet =
+    sourceSets.create("functionalTest") {
+    }
 
 gradlePlugin.testSourceSets(functionalTestSourceSet)
 configurations["functionalTestImplementation"].extendsFrom(configurations["testImplementation"])
@@ -90,9 +93,10 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         allWarningsAsErrors = true
 
         incremental = true
-        freeCompilerArgs = listOf(
-            "-Xjsr305=strict"
-        )
+        freeCompilerArgs =
+            listOf(
+                "-Xjsr305=strict",
+            )
     }
 }
 
@@ -108,5 +112,17 @@ tasks {
             put("Implementation-Title", "Gradle Kotlin DSL (${project.name})")
             put("Implementation-Version", archiveVersion.get())
         }
+    }
+}
+
+spotless {
+    ratchetFrom("origin/main")
+
+    kotlin {
+        ktlint()
+    }
+
+    kotlinGradle {
+        ktlint()
     }
 }
