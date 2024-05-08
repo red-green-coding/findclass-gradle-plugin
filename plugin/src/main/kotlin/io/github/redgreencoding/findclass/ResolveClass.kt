@@ -1,7 +1,10 @@
 package io.github.redgreencoding.findclass
 
+import java.net.URLClassLoader
 import org.barfuin.texttree.api.DefaultNode
 import org.barfuin.texttree.api.Node
+import org.barfuin.texttree.api.TextTree
+import org.barfuin.texttree.api.TreeOptions
 import org.barfuin.texttree.internal.TextTreeImpl
 import org.gradle.api.DefaultTask
 import org.gradle.api.artifacts.Configuration
@@ -11,7 +14,7 @@ import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.gradle.work.DisableCachingByDefault
-import java.net.URLClassLoader
+
 
 @DisableCachingByDefault(because = "Task does not generate any output")
 open class ResolveClass : DefaultTask() {
@@ -46,7 +49,11 @@ open class ResolveClass : DefaultTask() {
             val node =
                 findClassInConfigurations(it, project.configurations, configurations?.toSet() ?: emptySet())
 
-            println(TextTreeImpl().render(node))
+            val options = TreeOptions().apply {
+                setEnableDefaultColoring(true)
+            }
+
+            println(TextTree.newInstance(options).render(node))
         }
     }
 
