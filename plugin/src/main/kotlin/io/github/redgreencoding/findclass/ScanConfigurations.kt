@@ -20,6 +20,8 @@ open class ScanConfigurations @Inject constructor(private val archiveOperations:
     init {
         description = "Scans the configurations for a class pattern"
         group = "help"
+
+        notCompatibleWithConfigurationCache("not compatible with configuration cache")
     }
 
     @Input
